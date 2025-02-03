@@ -12,13 +12,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 
 
 class LoginScreen : Screen {
@@ -27,13 +28,13 @@ class LoginScreen : Screen {
         val navigator = LocalNavigator.current
         var user by remember { mutableStateOf("") }
         var passwd by remember { mutableStateOf("") }
-        val Azulblanco = Color(0xFFb3cde0)
-        val Azulgris = Color(0xFF6497b1)
-        val Azul = Color(0xFF005b96)
-        val Azulmar = Color(0xFF03396c)
-        val Azuloscuro = Color(0xFF011f4b)
-        Column(modifier = Modifier.background(Color.Gray).fillMaxSize().background(Azul), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            Column(modifier = Modifier.background(Azulblanco), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+        val blanco = Color(0xFFefeff2)
+        val pupura = Color(0xFFa69eb0)
+        val pastel = Color(0xFFf2e2cd)
+        val gris = Color(0xFFdadae3)
+        val negro = Color(0xFF011f4b)
+        Column(modifier = Modifier.fillMaxSize().background(pupura), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.shadow(8.dp, shape = RoundedCornerShape(8.dp)).background(blanco).padding(10.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("Login", modifier = Modifier.padding(20.dp), fontSize = TextUnit(value = 40f, type = TextUnitType.Sp))
                 OutlinedTextField(
                     value = user,
@@ -41,8 +42,8 @@ class LoginScreen : Screen {
                     label = { Text("Username") },
                     modifier = Modifier,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFF418e8e),
-                        focusedLabelColor = Color(0xFF5a4e3c)
+                        focusedBorderColor = pastel,
+                        focusedLabelColor = pastel
                     )
                 )
                 OutlinedTextField(
@@ -51,8 +52,8 @@ class LoginScreen : Screen {
                     label = { Text("Password") },
                     modifier = Modifier,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFF418e8e),
-                        focusedLabelColor = Color(0xFF5a4e3c)
+                        focusedBorderColor = pastel,
+                        focusedLabelColor = pastel
                     )
                 )
                 Button(
@@ -60,7 +61,7 @@ class LoginScreen : Screen {
                         navigator?.push(WelcomeScreen())
                     },
                     modifier = Modifier.padding(20.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Azul)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = gris)
                 ) {
                     Text("Iniciar Sesión")
                 }
