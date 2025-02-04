@@ -78,7 +78,7 @@ class ProyectosScreen : Screen{
             Box(
                 modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
                 contentAlignment = Alignment.Center) {
-                Text(text = "Historial", fontSize = 20.sp)
+                Text(text = "Proyectos Activos", fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(
