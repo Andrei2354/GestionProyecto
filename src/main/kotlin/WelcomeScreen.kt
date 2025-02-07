@@ -16,14 +16,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
+import network.MostrarProyectos
+import modelo.Proyecto
 
-data class Proyecto(val id: Int, val nombre: String, val fecha: String)
-
-class WelcomeScreen : Screen {
+class WelcomeScreen(private val usuario: String) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -32,22 +33,16 @@ class WelcomeScreen : Screen {
         val pastel = Color(0xFFf2e2cd)
         val gris = Color(0xFFdadae3)
         val negro = Color(0xFF011f4b)
-        val proyectosFinalizados = listOf(
-            Proyecto(1, "Proyecto", "31/1/2025"),
-            Proyecto(2, "Proyecto", "31/1/2025"),
-            Proyecto(3, "Proyecto", "31/1/2025"),
-            Proyecto(4, "Proyecto", "31/1/2025"),
-            Proyecto(5, "Proyecto", "31/1/2025"),
-            Proyecto(6, "Proyecto", "31/1/2025"),
-            Proyecto(7, "Proyecto", "31/1/2025"),
-            Proyecto(8, "Proyecto", "31/1/2025"),
-        )
+        val historial = remember { mutableStateOf(listOf<Proyecto>()) }
+        MostrarProyectos {
+            historial.value
+        }
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Box(
                     modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(20.dp),
                     contentAlignment = Alignment.Center) {
-                    Text(text = "Bienvenido Andrei", fontSize = 20.sp)
+                    Text(text = "Bienvenido $usuario", fontSize = 20.sp)
                 }
                 Card(elevation = 12.dp){
                     Column(modifier = Modifier.padding(6.dp),
@@ -99,15 +94,15 @@ class WelcomeScreen : Screen {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    items(proyectosFinalizados) { proyecto ->
+                    items(historial.value) { proyect ->
                         Row(
                             modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(7.dp)).background(blanco).clickable{
                                 navigator?.push(ProyectoScreen())}.padding(10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(proyecto.nombre)
-                            Text(proyecto.fecha)
+                            Text(proyect.nombre)
+                            Text(proyect.fecha)
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                     }

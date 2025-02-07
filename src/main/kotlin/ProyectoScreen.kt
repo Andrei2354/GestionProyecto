@@ -21,10 +21,11 @@ class ProyectoScreen: Screen{
     override fun Content() {
         val navigator = LocalNavigator.current
         val blanco = Color(0xFFefeff2)
-        val lila = Color(0xFFa69eb0)
         val pastel = Color(0xFFf2e2cd)
         val gris = Color(0xFFdadae3)
         val negro = Color(0xFF011f4b)
+        val lila = Color(0xFFa69eb0)
+
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
                 Card(elevation = 12.dp) {
