@@ -11,16 +11,16 @@ import kotlinx.coroutines.launch
 import modelo.Proyecto
 import network.NetworkUntils.httpClient
 
-fun MostrarProyectos(onSuccessResponse: (List<Proyecto>) -> Unit){
+fun MostrarProyectos(onSuccessResponse: (List<Proyecto>) -> Unit) {
     val url = "http://127.0.0.1:5000/proyecto/proyectos"
     CoroutineScope(Dispatchers.IO).launch {
-        val response = httpClient.get(url){
+        val response = httpClient.get(url) {
             contentType(ContentType.Application.Json)
         }
-        if (response.status == HttpStatusCode.OK){
+        if (response.status == HttpStatusCode.OK) {
             val listProyecto = response.body<List<Proyecto>>()
             onSuccessResponse(listProyecto)
-        } else{
+        } else {
             println("Error: ${response.status}, Body: ${response.bodyAsText()}")
         }
     }
