@@ -29,16 +29,6 @@ class ProyectosScreen : Screen{
         val pastel = Color(0xFFf2e2cd)
         val gris = Color(0xFFdadae3)
         val negro = Color(0xFF011f4b)
-        val proyectosFinalizados = listOf(
-            Proyecto(1, "Proyecto", "31/1/2025"),
-            Proyecto(2, "Proyecto", "31/1/2025"),
-            Proyecto(3, "Proyecto", "31/1/2025"),
-            Proyecto(4, "Proyecto", "31/1/2025"),
-            Proyecto(5, "Proyecto", "31/1/2025"),
-            Proyecto(6, "Proyecto", "31/1/2025"),
-            Proyecto(7, "Proyecto", "31/1/2025"),
-            Proyecto(8, "Proyecto", "31/1/2025"),
-        )
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
                 Card(elevation = 12.dp) {
