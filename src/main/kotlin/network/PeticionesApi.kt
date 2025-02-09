@@ -25,3 +25,35 @@ fun MostrarProyectos(onSuccessResponse: (List<Proyecto>) -> Unit) {
         }
     }
 }
+fun MostrarTodosProyectos(onSuccessResponse: (List<Proyecto>) -> Unit) {
+    val url = "http://127.0.0.1:5000/proyecto/proyectos_activos"
+
+    CoroutineScope(Dispatchers.IO).launch {
+        val response = httpClient.get(url) {
+            contentType(ContentType.Application.Json)
+        }
+        if (response.status == HttpStatusCode.OK) {
+            val listProyecto = response.body<List<Proyecto>>()
+            onSuccessResponse(listProyecto)
+        } else {
+            println("Error: ${response.status}, Body: ${response.bodyAsText()}")
+        }
+    }
+}
+
+
+fun MostrarMisProyectos(id: Int, onSuccessResponse: (List<Proyecto>) -> Unit) {
+    val url = "http://127.0.0.1:5000/proyecto/proyectos_gestor?id=$id"
+
+    CoroutineScope(Dispatchers.IO).launch {
+        val response = httpClient.get(url) {
+            contentType(ContentType.Application.Json)
+        }
+        if (response.status == HttpStatusCode.OK) {
+            val listProyecto = response.body<List<Proyecto>>()
+            onSuccessResponse(listProyecto)
+        } else {
+            println("Error: ${response.status}, Body: ${response.bodyAsText()}")
+        }
+    }
+}

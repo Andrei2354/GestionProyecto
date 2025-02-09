@@ -56,7 +56,7 @@ class WelcomeScreen(val user: User) : Screen {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
                         Row(modifier = Modifier, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                            Text("Andrei", modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
+                            Text(user.nombre, modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
                             Text("Gestor", modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
                         }
                         Text(
@@ -81,7 +81,7 @@ class WelcomeScreen(val user: User) : Screen {
                     Text(text = "Proyectos activos", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                     Button(
                         onClick = {
-                            navigator?.push(ProyectosScreen())
+                            navigator?.push(ProyectosScreen(user))
                         },
                         modifier = Modifier.padding(10.dp),
                         colors = ButtonDefaults.buttonColors(gris)
@@ -108,7 +108,7 @@ class WelcomeScreen(val user: User) : Screen {
                                 .clip(RoundedCornerShape(7.dp))
                                 .background(blanco)
                                 .clickable {
-                                    navigator?.push(ProyectoScreen())
+                                    navigator?.push(ProyectoScreen(proyect.id))
                                 }
                                 .padding(10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
