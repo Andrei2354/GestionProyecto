@@ -108,7 +108,7 @@ class WelcomeScreen(val user: User) : Screen {
                                 .clip(RoundedCornerShape(7.dp))
                                 .background(blanco)
                                 .clickable {
-                                    navigator?.push(ProyectoScreen(proyect.id))
+                                    navigator?.push(ProyectoScreen(proyect))
                                 }
                                 .padding(10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,

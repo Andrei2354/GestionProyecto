@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import modelo.Proyecto
 import network.NetworkUntils.httpClient
+import modelo.Tarea
 
 fun MostrarProyectos(onSuccessResponse: (List<Proyecto>) -> Unit) {
     val url = "http://127.0.0.1:5000/proyecto/proyectos"
@@ -52,6 +53,22 @@ fun MostrarMisProyectos(id: Int, onSuccessResponse: (List<Proyecto>) -> Unit) {
         if (response.status == HttpStatusCode.OK) {
             val listProyecto = response.body<List<Proyecto>>()
             onSuccessResponse(listProyecto)
+        } else {
+            println("Error: ${response.status}, Body: ${response.bodyAsText()}")
+        }
+    }
+}
+
+fun MostrarMistareas(id: Int, onSuccessResponse: (List<Tarea>) -> Unit) {
+    val url = "http://127.0.0.1:5000/tareas/proyectos?id=$id"
+
+    CoroutineScope(Dispatchers.IO).launch {
+        val response = httpClient.get(url) {
+            contentType(ContentType.Application.Json)
+        }
+        if (response.status == HttpStatusCode.OK) {
+            val listTarea = response.body<List<Tarea>>()
+            onSuccessResponse(listTarea)
         } else {
             println("Error: ${response.status}, Body: ${response.bodyAsText()}")
         }

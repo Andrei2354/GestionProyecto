@@ -1,11 +1,17 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
@@ -14,9 +20,12 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import modelo.Tarea
+import network.MostrarMistareas
+import modelo.Proyecto
 
 
-class ProyectoScreen: Screen{
+class ProyectoScreen(val proyect: Proyecto): Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -26,8 +35,20 @@ class ProyectoScreen: Screen{
         val negro = Color(0xFF011f4b)
         val lila = Color(0xFFa69eb0)
 
+        val misTareas = remember { mutableStateOf(emptyList<Tarea>()) }
+        MostrarMistareas(proyect.id) {
+            misTareas.value = it
+        }
+
+
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
+            Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Box(
+                    modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(proyect.nombre)
+                }
                 Card(elevation = 12.dp) {
                     Column(
                         modifier = Modifier.padding(6.dp),
@@ -61,8 +82,47 @@ class ProyectoScreen: Screen{
                     }
                 }
             }
-            Column(modifier = Modifier.padding(20.dp).fillMaxWidth()){
-
+            Column(modifier = Modifier.padding(20.dp).fillMaxWidth()) {
+                Card(elevation = 12.dp) {
+                    Column {
+                        Text("ID: ${proyect.id}")
+                        Text("Descripción: ${proyect.descripcion}")
+                        Text("Fecha_creacion: ${proyect.fecha_creacion}")
+                        Text("Fecha_inicio: ${proyect.fecha_inicio}")
+                        Text("Fecha_finalizacion: ${proyect.fecha_finalizacion}")
+                    }
+                }
+                Box(
+                    modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Tareas ")
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                LazyColumn(
+                    modifier = Modifier.height(300.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    items(misTareas.value) { tarea ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(7.dp))
+                                .background(blanco)
+                                .clickable {
+                                    navigator?.push(TareaScreen(tarea))
+                                }
+                                .padding(10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(proyect.nombre)
+                            Text(proyect.fecha_inicio)
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
             }
         }
     }
