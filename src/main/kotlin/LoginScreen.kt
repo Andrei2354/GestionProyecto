@@ -60,7 +60,7 @@ class LoginScreen : Screen {
                     onClick = {
                         if (usuario.isNotEmpty() && passwd.isNotEmpty()) {
                             apiLogin(usuario, passwd) { user ->
-                                navigator?.push(WelcomeScreen(usuario))
+                                navigator?.push(WelcomeScreen(user))
                                 usuario = ""
                                 passwd = ""
                             }
