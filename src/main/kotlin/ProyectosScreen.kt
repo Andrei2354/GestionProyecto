@@ -96,7 +96,7 @@ class ProyectosScreen(val user: User) : Screen{
             }
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(
-                modifier = Modifier.height(300.dp),
+                modifier = Modifier.padding(7.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -127,7 +127,7 @@ class ProyectosScreen(val user: User) : Screen{
             }
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(
-                modifier = Modifier.height(300.dp),
+                modifier = Modifier.padding(7.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {

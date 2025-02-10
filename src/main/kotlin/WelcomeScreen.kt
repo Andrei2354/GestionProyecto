@@ -91,13 +91,13 @@ class WelcomeScreen(val user: User) : Screen {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Box(
-                    modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
+                    modifier = Modifier.width(150.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
                     contentAlignment = Alignment.Center) {
                     Text(text = "Historial", fontSize = 20.sp)
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 LazyColumn(
-                    modifier = Modifier.height(300.dp),
+                    modifier = Modifier,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

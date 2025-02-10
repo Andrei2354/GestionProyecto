@@ -42,9 +42,9 @@ class ProyectoScreen(val proyect: Proyecto): Screen {
 
 
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(modifier = Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Box(
-                    modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
+                    modifier = Modifier.width(300.dp).height(50.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(proyect.nombre)
@@ -55,7 +55,7 @@ class ProyectoScreen(val proyect: Proyecto): Screen {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row(
-                            modifier = Modifier,
+                            modifier = Modifier.padding(6.dp),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -82,9 +82,9 @@ class ProyectoScreen(val proyect: Proyecto): Screen {
                     }
                 }
             }
-            Column(modifier = Modifier.padding(20.dp).fillMaxWidth()) {
+            Column(modifier = Modifier.padding(10.dp).fillMaxWidth()) {
                 Card(elevation = 12.dp) {
-                    Column {
+                    Column(modifier = Modifier.width(400.dp).padding(12.dp)) {
                         Text("ID: ${proyect.id}")
                         Text("Descripción: ${proyect.descripcion}")
                         Text("Fecha_creacion: ${proyect.fecha_creacion}")
@@ -92,6 +92,7 @@ class ProyectoScreen(val proyect: Proyecto): Screen {
                         Text("Fecha_finalizacion: ${proyect.fecha_finalizacion}")
                     }
                 }
+                Spacer(modifier = Modifier.height(10.dp))
                 Box(
                     modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
                     contentAlignment = Alignment.Center
