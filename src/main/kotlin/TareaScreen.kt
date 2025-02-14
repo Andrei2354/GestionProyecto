@@ -14,8 +14,9 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import modelo.Tarea
 
-class TareaScreen : Screen {
+class TareaScreen(val tarea: Tarea) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,15 +15,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import androidx.compose.material3.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import network.MostrarProyectos
 import modelo.Proyecto
+import modelo.User
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
-class WelcomeScreen(private val usuario: String) : Screen {
+
+class WelcomeScreen(val user: User) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -33,23 +38,25 @@ class WelcomeScreen(private val usuario: String) : Screen {
         val pastel = Color(0xFFf2e2cd)
         val gris = Color(0xFFdadae3)
         val negro = Color(0xFF011f4b)
-        val historial = remember { mutableStateOf(listOf<Proyecto>()) }
-        MostrarProyectos {
-            historial.value
+
+
+        val proyectoList = remember { mutableStateOf(emptyList<Proyecto>()) }
+        MostrarProyectos  {
+            proyectoList.value = it
         }
         Column(modifier = Modifier.fillMaxSize().background(lila), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Box(
                     modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(20.dp),
                     contentAlignment = Alignment.Center) {
-                    Text(text = "Bienvenido $usuario", fontSize = 20.sp)
+                    Text(text = "Bienvenido ${user.nombre}", fontSize = 20.sp)
                 }
                 Card(elevation = 12.dp){
                     Column(modifier = Modifier.padding(6.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
                         Row(modifier = Modifier, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                            Text("Andrei", modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
+                            Text(user.nombre, modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
                             Text("Gestor", modifier = Modifier.padding(3.dp), fontSize = TextUnit(value = 10f, type = TextUnitType.Sp))
                         }
                         Text(
@@ -74,7 +81,7 @@ class WelcomeScreen(private val usuario: String) : Screen {
                     Text(text = "Proyectos activos", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                     Button(
                         onClick = {
-                            navigator?.push(ProyectosScreen())
+                            navigator?.push(ProyectosScreen(user))
                         },
                         modifier = Modifier.padding(10.dp),
                         colors = ButtonDefaults.buttonColors(gris)
@@ -84,30 +91,35 @@ class WelcomeScreen(private val usuario: String) : Screen {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Box(
-                    modifier = Modifier.width(300.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
+                    modifier = Modifier.width(150.dp).clip(RoundedCornerShape(7.dp)).background(blanco).padding(7.dp),
                     contentAlignment = Alignment.Center) {
                     Text(text = "Historial", fontSize = 20.sp)
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 LazyColumn(
-                    modifier = Modifier.height(300.dp),
+                    modifier = Modifier,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    items(historial.value) { proyect ->
+                    items(proyectoList.value) { proyect ->
                         Row(
-                            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(7.dp)).background(blanco).clickable{
-                                navigator?.push(ProyectoScreen())}.padding(10.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(7.dp))
+                                .background(blanco)
+                                .clickable {
+                                    navigator?.push(ProyectoScreen(proyect))
+                                }
+                                .padding(10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(proyect.nombre)
-                            Text(proyect.fecha)
+                            Text(proyect.fecha_inicio)
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
-
             }
         }
     }
